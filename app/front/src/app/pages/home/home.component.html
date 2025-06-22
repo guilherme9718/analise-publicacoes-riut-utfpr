@@ -1,0 +1,52 @@
+<div class="flex flex-col items-center justify-center gap-4">
+  <form [formGroup]="form">
+    <div class="flex flex-row gap-2">
+      <p-iconfield class="w-68">
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          type="text"
+          pInputText
+          placeholder="Buscar"
+          formControlName="query"
+        />
+      </p-iconfield>
+      @if(loading$ | async) {
+      <div class="flex items-center">
+        <i class="pi pi-spin pi-spinner w-fit"></i>
+      </div>
+      }
+    </div>
+  </form>
+  @let articles = (articles$ | async) || []; @if(articles.length > 0) {
+  <p-table [value]="articles" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #header>
+      <tr>
+        <th>Título</th>
+        <th>Autores</th>
+        <th>Orientador</th>
+        <th>Resumo</th>
+        <th>Url</th>
+        <th>PDF</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-art>
+      <tr>
+        <td class="font-semibold">{{ art.title }}</td>
+        <td>{{ art.authors }}</td>
+        <td>{{ art.advisor1 }}</td>
+        <td class="font-light">{{ art.resumo }}</td>
+        <td>
+          <a [href]="art.uri" target="_blank"
+            ><p-button icon="pi pi-external-link" aria-label="open"
+          /></a>
+        </td>
+        <td>
+          <a [href]="art.pdf_uri" target="_blank"
+            ><p-button icon="pi pi-download" aria-label="open"
+          /></a>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  }
+</div>

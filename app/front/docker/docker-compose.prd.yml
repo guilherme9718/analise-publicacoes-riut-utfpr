@@ -1,0 +1,16 @@
+services:
+  portal-cliente-ng:
+    container_name: portal-cliente-ng
+    hostname: portal-cliente-ng
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./Dockerfile
+      args:
+        ENVIRONMENT_NAME: production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portal-cliente.rule=Host(`portaldocliente.mps.com.br`)"
+      - "traefik.http.routers.portal-cliente.entrypoints=websecure"
+      - "traefik.http.routers.portal-cliente.tls.certresolver=letsencrypt"
+      - "traefik.http.services.portal-cliente.loadbalancer.server.port=80"

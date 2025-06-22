@@ -1,0 +1,15 @@
+services:
+  portal-cliente-ng:
+    container_name: portal-cliente-ng
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./Dockerfile
+    networks:
+      - portal-cliente-web
+    volumes:
+      - ../nginx.conf:/etc/nginx/conf.d/default.conf
+
+networks:
+  portal-cliente-web:
+    external: true
